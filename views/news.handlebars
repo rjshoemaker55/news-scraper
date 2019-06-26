@@ -1,0 +1,21 @@
+<div class = 'container'>
+    <div class = 'row'>
+        <div class = 'col-12'>
+
+{{#each stories}}
+            <div class="card">
+                 {{!-- <img class="card-img-top" src={{imageUrl}} alt="Card image cap"> --}}
+  <div class="card-body">
+  <div class="card-body">
+    <h5 class="card-title">{{headline}}</h5>
+    <h6 class="card-subtitle mb-2 text-muted">{{timeStamp}}</h6>
+    <p class="card-text">{{summary}}</p>
+    <a href={{link}} class="card-link">{{link}}</a>
+     </div>
+</div>
+
+{{/each}}
+
+</div>
+</div>
+</div>
