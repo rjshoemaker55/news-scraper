@@ -11,6 +11,12 @@
     <h6 class="card-subtitle mb-2 text-muted">{{timeStamp}}</h6>
     <p class="card-text">{{summary}}</p>
     <a href={{link}} class="card-link">{{link}}</a>
+
+    {{#if saved}}
+    <button class='unsave-btn btn btn-warning' data-id={{_id}}>Unsave</button>
+    {{else}}
+    <button class='save-btn btn btn-warning' data-id={{_id}}>Save</button>
+    {{/if}}
      </div>
 </div>
 </div>

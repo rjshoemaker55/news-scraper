@@ -3,6 +3,7 @@ var express = require("express")
 var exphbs = require("express-handlebars")
 const mongoose = require('mongoose')
 
+
 // Require in Story model from Story.js
 const Story = require('./models/Story')
 
@@ -26,10 +27,13 @@ app.engine(
 app.set("view engine", "handlebars");
 
 // Connect to the Mongo DB with Mongoose
-mongoose.connect('mongodb://localhost/newsdb', { useNewUrlParser: true })
+var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/newsdb";
+mongoose.connect(MONGODB_URI);
+mongoose.set('useFindAndModify', false);
 
 // Setup apiroutes
-require("./apiRoutes")(app);
+require("./routes/apiRoutes")(app);
+require('./routes/htmlroutes')(app)
 
 // Start express server
 app.listen(PORT, () => console.log(`Example app listening on port ${PORT}!`))

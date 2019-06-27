@@ -1,6 +1,6 @@
 const cheerio = require('cheerio')
 const axios = require('axios')
-const Story = require('./models/Story')
+const Story = require('../models/Story')
 
 module.exports = (app) => {
     app.get('/findstories', (req, res) => {
@@ -37,8 +37,32 @@ module.exports = (app) => {
                 return i < 11
             })
 
+            res.redirect('/')
 
-            res.render('news', { stories: stories })
+        })
+    })
+    app.post('/savestory/:id', (req, res) => {
+
+        Story.findOneAndUpdate({ _id: req.params.id }, { saved: true }, {new: true}, (err, data) => {
+            if (err) {
+                console.log(err)
+            }
+            console.log(data)
+
+        })
+    })
+
+    app.post('/unsavestory/:id', (req, res) => {
+
+        console.log('hit unsave story route')
+        console.log('-----------------------')
+
+        Story.findOneAndUpdate({ _id: req.params.id }, { saved: false }, {new: true}, (err, data) => {
+            if (err) {
+                console.log(err)
+            }
+            console.log(data)
+            console.log('------------------------')
 
         })
     })

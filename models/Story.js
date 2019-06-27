@@ -7,8 +7,10 @@ var StorySchema = new Schema({
     timeStamp: String,
     summary: String,
     link: String,
-    imgUrl: String,
-    saved: Boolean
+    saved: {
+        type: Boolean,
+        default: false
+    }
 })
 
 var Story = mongoose.model('Story', StorySchema)
