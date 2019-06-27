@@ -1,5 +1,6 @@
 const cheerio = require('cheerio')
 const axios = require('axios')
+const Story = require('./models/Story')
 
 module.exports = (app) => {
     app.get('/findstories', (req, res) => {
@@ -15,9 +16,6 @@ module.exports = (app) => {
                 const rawLink = $(element).find('.c0150').attr('href')
                 const link = `https://apnews.com/${rawLink}`
                 const timeStamp = $(element).find('.Timestamp')
-                const imgUrl = $(element).find('img.c0153.0155').attr('src')
-
-                console.log(imgUrl)
 
                 const result = {
                     headline: headline.text(),
@@ -27,6 +25,14 @@ module.exports = (app) => {
                 }
 
                 stories.push(result)
+
+                Story.create(result)
+                    .then(function(article) {
+                        console.log(article)
+                    })
+                    .catch(function(err) {
+                        console.log(err)
+                    })
 
                 return i < 11
             })

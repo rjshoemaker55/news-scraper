@@ -1,35 +1,35 @@
-var express = require("express");
-var exphbs = require("express-handlebars");
+// Require in express, handlebars, and mongoose
+var express = require("express")
+var exphbs = require("express-handlebars")
+const mongoose = require('mongoose')
 
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
+// Require in Story model from Story.js
+const Story = require('./models/Story')
 
-var newsSchema = new Schema({
-    title: String,
-    timeStamp: String,
-    summary: String,
-    link: String,
-    imgUrl: String,
-    saved: Boolean
-})
-
-var Story = mongoose.model('Blog', newsSchema)
-
+// Express server setup
 var app = express();
 var PORT = process.env.PORT || 3000;
 var app = express();
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({
+  extended: true
+}));
 app.use(express.json());
-app.use(express.static("public"));
+app.use(express.static("public"))
 
+// Handlebars setup
 app.engine(
-    "handlebars",
-    exphbs({
-      defaultLayout: "main"
-    })
-  );
-  app.set("view engine", "handlebars");
+  "handlebars",
+  exphbs({
+    defaultLayout: "main"
+  })
+);
+app.set("view engine", "handlebars");
 
-  require("./apiRoutes")(app);
+// Connect to the Mongo DB with Mongoose
+mongoose.connect('mongodb://localhost/newsdb', { useNewUrlParser: true })
 
-  app.listen(PORT, () => console.log(`Example app listening on port ${PORT}!`))
+// Setup apiroutes
+require("./apiRoutes")(app);
+
+// Start express server
+app.listen(PORT, () => console.log(`Example app listening on port ${PORT}!`))
